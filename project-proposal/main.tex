@@ -1,0 +1,353 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% -----------------------------------------------------
+% bvraghav-tiet-ucs503p-article.sty
+% -----------------------------------------------------
+
+% Variable: Lab Instructor
+\makeatletter \newcommand{\BvrSetLabInstructor}[1]{%
+  \gdef\Bvr@LabInstructor{#1}}
+% default
+\newcommand{\Bvr@LabInstructor}{Dr. Raghav %
+  B. Venkataramaiyer}
+% public accessor
+\newcommand{\BvrLabInstructorValue}{\Bvr@LabInstructor}
+\makeatother
+
+% Add subtitle
+\usepackage{titling}
+% -- Set title bold
+\pretitle{\begin{center}\bfseries\fontsize{18bp}{18bp}\selectfont}
+\makeatletter
+\newcommand{\BvrSubtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip 0.5em}%
+}
+\makeatother
+
+% Hints in the section title(s)
+\newcommand{\BvrHint}[1]{%
+  {\normalfont\normalsize\itshape\hfill #1}}
+
+% -----------------------------------------------------
+
+\title{CampusConnect: A Unified Campus Event and
+  Society Management Platform}
+
+\BvrSetLabInstructor{Dr. Raghav B. Venkataramaiyer}
+
+\BvrSubtitle{%
+  Project Proposal for UCS503P  \\
+  Submitted to: \BvrLabInstructorValue \\ \bfseries
+  Thapar Institute of Engineering and Technology%
+}
+
+\author{
+  Nitin Kumar, CSED%
+  \thanks{Roll No: \texttt{1024030339}, %
+    Email: \texttt{nkumar\_be24\@thapar.edu}}
+  \and 
+  Mohan Arora, CSED%
+  \thanks{Roll No: \texttt{1024031087}, %
+    Email: \texttt{marora\_be24\@thapar.edu}}
+  \and 
+  Prateek Malpani, CSED%
+  \thanks{Roll No: \texttt{1024030340}, %
+    Email: \texttt{pmalpani\_be24\@thapar.edu}}
+}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Higher-order goal%
+  \BvrHint{\ldots secondary framing}}
+This project aims to improve campus governance by
+reducing the time and effort required to take a society
+event from an idea to a registerable campus-wide event.
+While the topic is broader than any single event,
+the immediate engineering objective is to translate
+\emph{efficient event administration} into a measured
+software solution that connects societies, the
+administration, and students on one platform.
+
+\section{Time-to-value %
+\BvrHint{\ldots primary heuristic}}
+\begin{itemize}[leftmargin=0.7cm]
+    \item We will deliver meaningful increments quickly by prototyping the core user workflow and validating it with actual campus roles within a short iteration window.
+    \item We will prioritize fast feedback over perfection by using weekly iterations (and targeting CI-backed automation early) to reduce release friction.
+    \item Success is defined by what can be delivered and measured in the first iteration, then improved based on user feedback.
+\end{itemize}
+
+\section{Problem Statement}
+Managing the activities of many student societies
+across a large campus is fragmented and slow.
+Common pain points include:
+\begin{itemize}[leftmargin=0.7cm]
+    \item \textbf{Fragmentation:} proposals, approvals
+      and announcements live in emails, notice boards
+      and paper forms, causing lost context.
+    \item \textbf{Low transparency:} students cannot
+      easily see what is happening across campus or
+      whether an event has been approved and will run.
+    \item \textbf{Slow coordination:} an authority has
+      no structured queue to review, approve, reject or
+      send back an event proposal with clear reasons.
+    \item \textbf{Poor data quality:} registrations are
+      manual, capacity is untracked, and there is no
+      reliable record of who organizes or attends an
+      event.
+\end{itemize}
+
+\textbf{Why this matters now (contextual relevance):} On
+a campus with dozens of active societies, even small
+process improvements can noticeably reduce the delay
+between an event idea and a full room of participating
+students.
+
+\section{Proposed Solution %
+\BvrHint{\ldots Software Proposition}}
+\subsection{Overview}
+Build a \textbf{web-based} ``CampusConnect'' platform with
+the following components:
+\begin{itemize}[leftmargin=0.7cm]
+    \item \textbf{Society portal:} draft and submit event
+      proposals with date, venue, budget, objectives and
+      coordinators.
+    \item \textbf{Admin review queue:} approve, reject or
+      request changes on proposals with comments;
+      manage categories, societies, users and activity.
+    \item \textbf{Public campus index:} a login-free
+      catalogue of upcoming events, categories, and a
+      complete society directory with profiles.
+    \item \textbf{Student module:} register and cancel
+      for events, save events, and view registration
+      history.
+    \item \textbf{Notifications:} in-app notifications at
+      every lifecycle step (submitted, approved,
+      rejected, changes requested, event cancelled).
+\end{itemize}
+
+\subsection{Core workflow}
+\begin{enumerate}[leftmargin=0.7cm]
+    \item A society drafts a proposal and submits it;
+      the proposal enters the admin review queue.
+    \item Admin approves (an event is created and
+      published), requests changes (the society revises
+      and resubmits), or rejects with a reason.
+    \item The approved event appears on the public index,
+      under its category, and on the society's public
+      profile.
+    \item Students browse freely and register when ready;
+      capacity and live registration counts are tracked.
+\end{enumerate}
+
+\subsection{Operational constraints for an educational, campus setting}
+\begin{itemize}[leftmargin=0.7cm]
+    \item Keep the solution usable on low-to-mid range
+      devices via responsive web design.
+    \item Avoid dependence on advanced research
+      algorithms; focus on workflow, correctness, and
+      system hardening.
+    \item Seed the system with the real TIET society list
+      (57 societies across 11 categories) so it is
+      immediately meaningful to evaluators.
+\end{itemize}
+
+\section{Solution Approach %
+\BvrHint{\ldots Engineering focus}}
+This is an engineering course project, so we focus on
+workflow automation and system correctness rather than
+novel algorithm research.
+
+\subsection{Web architecture %
+\BvrHint{\ldots web-based solution}}
+A typical 3-tier web architecture:
+\begin{itemize}[leftmargin=0.7cm]
+    \item \textbf{Frontend:} React 19 + TypeScript + Vite
+      SPA with role-based layouts (public, student,
+      society, admin).
+    \item \textbf{Backend API:} Node.js + Express +
+      TypeScript; modules for auth, public, student,
+      society and admin routes; zod validation on every
+      route.
+    \item \textbf{Database:} SQLite via Prisma ORM
+      (PostgreSQL-ready), storing users, societies,
+      members, proposals, events, registrations,
+      notifications and activity logs.
+\end{itemize}
+
+\subsection{Security and correctness %
+\BvrHint{\ldots non-research}}
+\begin{itemize}[leftmargin=0.7cm]
+    \item JWT access + refresh tokens with role-based
+      access control (\texttt{ADMIN}, \texttt{SOCIETY},
+      \texttt{USER}).
+    \item Bcrypt password hashing; helmet, rate limiting
+      and restricted CORS; uploads restricted by MIME
+      whitelist and size cap.
+    \item Status-transition guards so a proposal cannot
+      be approved twice or an event cancelled twice.
+\end{itemize}
+
+\subsection{CI/CD and fast delivery enabler}
+CI/CD will be used to:
+\begin{itemize}[leftmargin=0.7cm]
+    \item Automatically build and run tests on every
+      change.
+    \item Produce repeatable documentation builds
+      (mkdocs deployed to GitHub Pages on every push to
+      \texttt{master}/\texttt{main}).
+    \item Enable safe and frequent releases of
+      incremental features.
+\end{itemize}
+
+\section{Evaluation Criterion %
+\BvrHint{\ldots measurable and attributable}}
+We define success using measurable metrics tied to the
+core workflow.
+
+\subsection{Primary evaluation metric}
+\textbf{Proposal-to-publication latency:} time between a
+society submitting a proposal and the administration
+publishing the resulting event.
+\begin{itemize}[leftmargin=0.7cm]
+    \item Target: median latency $\le$ 48 hours during the
+      pilot window.
+    \item Attribution: measured from database timestamps
+      (\texttt{submittedAt} vs.\ \texttt{reviewedAt} and
+      \texttt{publishedAt}).
+\end{itemize}
+
+\subsection{Secondary evaluation metrics}
+\begin{itemize}[leftmargin=0.7cm]
+    \item \textbf{Review completeness:} percentage of
+      submitted proposals resolved (approved or
+      rejected) without rework requests.
+    \item \textbf{Registration accuracy:} capacity never
+      oversubscribed beyond the configured cap, and
+      attendance matches registrations.
+    \item \textbf{Discovery coverage:} every approved
+      event is reachable from the public index within one
+      click of its category page.
+    \item \textbf{Reliability:} the integration test
+      suite passes end-to-end (\texttt{npm test} in the
+      backend and \texttt{tsc -b} + \texttt{vite build}
+      in the frontend).
+\end{itemize}
+
+\subsection{Pilot validation plan %
+\BvrHint{\ldots high-level}}
+\begin{itemize}[leftmargin=0.7cm]
+    \item Recruit 10--20 pilot users (students) and 3--5
+      roles from society and administration (simulated if
+      real staff are unavailable).
+    \item Compare metrics within the iteration window by
+      logging baseline estimates via short interviews or
+      existing process observations.
+\end{itemize}
+
+\section{Scalability %
+\BvrHint{\ldots with foresight}}
+The proposition should scale in both theoretical and
+practical senses.
+
+\begin{enumerate}[leftmargin=0.7cm]
+    \item \textbf{Scalable (theoretically):} The system
+      should support growth in the number of societies,
+      events and concurrent student traffic by:
+    \begin{itemize}[leftmargin=0.7cm]
+        \item decoupling components (frontend/backend),
+        \item enabling pagination and indexing for common
+          queries (events by date/status, societies by
+          category),
+        \item using stateless API design.
+    \end{itemize}
+
+    \item \textbf{Operationally deployable (practically):}
+      The system should run on common web hosting:
+    \begin{itemize}[leftmargin=0.7cm]
+        \item managed database (PostgreSQL via Prisma),
+        \item containerized or platform-hosted
+          deployment,
+        \item CI/CD pipeline for staging/production.
+    \end{itemize}
+\end{enumerate}
+
+\section{Engine availability heuristic}
+A mature set of ``engines'' (tooling/services) is
+available to implement this as a web-based project:
+\begin{itemize}[leftmargin=0.7cm]
+    \item React + Vite for the SPA, and Express for REST
+      APIs.
+    \item Prisma ORM with a managed relational database.
+    \item Token-based authentication (JWT).
+    \item zod for validation; multer for uploads.
+    \item Vitest + supertest for unit/integration tests.
+    \item CI runner and GitHub Pages deployment target.
+\end{itemize}
+We will use these mature components to focus on workflow
+design, correctness, and measurement rather than
+inventing new infrastructure.
+
+\section{Project scope and deliverables %
+\BvrHint{\ldots iteration-friendly}}
+\subsection{Initial deliverable %
+\BvrHint{\ldots first iteration}}
+\begin{itemize}[leftmargin=0.7cm]
+    \item Society proposal form with full validation and
+      submission
+    \item Admin review queue: approve / reject / request
+      changes
+    \item Public event index and event detail pages
+    \item Student registration with capacity tracking
+    \item CI: build + backend integration tests + linting
+\end{itemize}
+
+\subsection{Subsequent deliverables}
+\begin{itemize}[leftmargin=0.7cm]
+    \item Society directory with per-society profiles and
+      event lists
+    \item Notification layer at every lifecycle step
+    \item Admin dashboard for statistics and activity log
+    \item Saved events, registration history, and
+      search/filtering improvements
+\end{itemize}
+
+\section{Risks and mitigations}
+\begin{itemize}[leftmargin=0.7cm]
+    \item \textbf{Data privacy / consent:} minimize
+      collected data; expose no password or internal
+      identifiers through public APIs (test-verified).
+    \item \textbf{Adoption:} provide an editorial, public
+      discovery experience so the read-side needs zero
+      training; keep role dashboards minimal and guided.
+    \item \textbf{Evaluation measurement ambiguity:}
+      instrument timestamps (\texttt{submittedAt},
+      \texttt{reviewedAt}, \texttt{publishedAt}) and define
+      clear status transitions before development begins.
+    \item \textbf{Operational issues in pilot:} use CI
+      early; ensure repeatable \texttt{npm run} scripts
+      for seed, test, and build.
+\end{itemize}
+
+\section{Summary}
+This project proposes a deployable web platform that
+takes society events from proposal to registration on one
+campus index.  It meets the course criteria by
+emphasizing time-to-value through rapid weekly
+iterations, implementing CI/CD to support frequent safe
+releases, and using measurable evaluation criteria
+(especially proposal-to-publication latency).  It remains
+focused on engineering workflow and scalability readiness
+rather than research-driven novelty.
+
+\end{document}

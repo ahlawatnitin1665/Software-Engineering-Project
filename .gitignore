@@ -1,0 +1,44 @@
+# Node
+node_modules/
+code/frontend/node_modules/
+code/backend/node_modules/
+code/frontend/dist/
+code/backend/dist/
+
+# Secrets & local env
+.env
+.env.local
+code/frontend/.env
+code/backend/.env
+*.env.local
+
+# Databases
+*.db
+*.db-journal
+code/backend/prisma/*.db
+code/backend/prisma/*.db-journal
+
+# Uploads
+uploads/
+code/backend/uploads/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.xdv
+*.synctex.gz
+project-proposal/build/
+
+# Python / mkdocs
+__pycache__/
+*.pyc
+.venv/
+.cache/
+site/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db

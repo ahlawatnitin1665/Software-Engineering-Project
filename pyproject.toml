@@ -1,0 +1,30 @@
+﻿[build-system]
+requires = ["hatchling","hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "Software-Engineering-Project"
+version = "0.1.0"
+authors = [
+  { name="Nitin Kumar", email="nkumar_be24@thapar.edu" },
+  { name="Mohan Arora", email="marora_be24@thapar.edu" },
+  { name="Prateek Malpani", email="pmalpani_be24@thapar.edu" },
+]
+description = "UCS503 : Software Engineering : Project -- CampusConnect"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Operating System :: POSIX",
+    "Programming Language :: Unix Shell",
+]
+dependencies = ["click"]
+
+[project.urls]
+Homepage = "https://github.com/ahlawatnitin1665/Software-Engineering-Project"
+Issues = "https://github.com/ahlawatnitin1665/Software-Engineering-Project/issues"
+
+# THE END -------------------------------------------
